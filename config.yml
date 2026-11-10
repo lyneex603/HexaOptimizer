@@ -1,0 +1,119 @@
+# ServerOptimizer 1.1.2 — conservative defaults for Purpur 26.3.
+# MONITOR = observe only. RECOMMEND = observe and provide advice. AUTOMATIC = only explicitly allowed actions.
+mode: MONITOR
+
+monitoring:
+  interval-seconds: 10            # Snapshot interval; minimum 2 seconds.
+  history-minutes: 60             # In-memory rolling history; not persisted across restarts.
+  chunk-scan-interval-seconds: 60 # Delay after a complete scan before the next scan begins.
+  chunks-per-tick: 6              # Main-thread scan budget. Lower this on busy servers.
+
+thresholds:
+  min-tps: 18.0
+  max-mspt: 50.0
+  max-memory-percent: 90.0
+  max-ground-items: 250
+  max-mobs-per-chunk: 40
+  max-entities-per-chunk: 80
+  max-projectiles: 300
+
+alerts:
+  enabled: true
+  cooldown-seconds: 120           # Per-alert key cooldown.
+  console: true
+  admins: true                    # Sends to players with serveroptimizer.alerts.
+  tps: true
+  mspt: true
+  memory: true
+  entities: true
+
+entities:
+  monitor: true
+  item-cleaner:
+    enabled: false                # Must also set mode: AUTOMATIC and allow-item-cleanup: true.
+    interval-minutes: 60
+    warnings-seconds: [300, 60, 10]
+    worlds: []                    # Empty = all worlds. Only already-loaded chunks are scanned.
+    include-named-items: false    # Named drops are protected unless explicitly opted in.
+    include-items-with-lore: false # Drops with lore are protected unless explicitly opted in.
+    protect-all-item-meta: true   # Protect enchanted, damaged, renamed and otherwise modified stacks.
+    minimum-age-ticks: 6000       # Only consider drops at least 5 minutes old.
+    entities-per-tick: 200        # Bound work even in a chunk with a huge entity pile.
+    protected-materials:          # Valuable PvP/server items are never removed by the cleaner.
+      - DIAMOND
+      - DIAMOND_BLOCK
+      - DIAMOND_ORE
+      - DEEPSLATE_DIAMOND_ORE
+      - DIAMOND_SWORD
+      - DIAMOND_AXE
+      - DIAMOND_PICKAXE
+      - DIAMOND_HELMET
+      - DIAMOND_CHESTPLATE
+      - DIAMOND_LEGGINGS
+      - DIAMOND_BOOTS
+      - NETHERITE_INGOT
+      - NETHERITE_BLOCK
+      - NETHERITE_SCRAP
+      - ANCIENT_DEBRIS
+      - NETHERITE_SWORD
+      - NETHERITE_AXE
+      - NETHERITE_PICKAXE
+      - NETHERITE_HELMET
+      - NETHERITE_CHESTPLATE
+      - NETHERITE_LEGGINGS
+      - NETHERITE_BOOTS
+      - ELYTRA
+      - TOTEM_OF_UNDYING
+      - ENCHANTED_GOLDEN_APPLE
+      - GOLDEN_APPLE
+      - END_CRYSTAL
+      - SHULKER_BOX
+      - WHITE_SHULKER_BOX
+      - ORANGE_SHULKER_BOX
+      - MAGENTA_SHULKER_BOX
+      - LIGHT_BLUE_SHULKER_BOX
+      - YELLOW_SHULKER_BOX
+      - LIME_SHULKER_BOX
+      - PINK_SHULKER_BOX
+      - GRAY_SHULKER_BOX
+      - LIGHT_GRAY_SHULKER_BOX
+      - CYAN_SHULKER_BOX
+      - PURPLE_SHULKER_BOX
+      - BLUE_SHULKER_BOX
+      - BROWN_SHULKER_BOX
+      - GREEN_SHULKER_BOX
+      - RED_SHULKER_BOX
+      - BLACK_SHULKER_BOX
+
+chunks:
+  monitor: true
+  report-top: 10
+
+memory:
+  monitor: true                   # JVM heap/non-heap and GC counters are observed.
+
+pvp:
+  monitor-event-volume: true
+  report-interval-seconds: 60
+  # No damage, attack speed, knockback, velocity, armor, enchantment or potion settings are changed.
+
+bedrock:
+  detect-with-floodgate: true
+  detect-with-geyser: true
+  # Optional reflection-based detection only; no packet interception or protocol changes.
+
+automatic:
+  enabled: false
+  allow-item-cleanup: false       # Explicitly opt in; item cleaner is otherwise disabled.
+  allow-chunk-unload: false       # Not implemented: chunks are never forcibly unloaded.
+  allow-gameplay-changes: false   # Not implemented: gameplay is never altered.
+
+discord:
+  enabled: false
+  webhook-url: ""                # Keep this secret; do not share it publicly.
+  cooldown-seconds: 300
+  send-critical-only: true
+
+logging:
+  file: true                      # Plugin events also go to the server's normal log.
+  detailed-reports: true

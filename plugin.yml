@@ -1,0 +1,36 @@
+name: ServerOptimizer
+version: 1.1.2
+main: dev.serveroptimizer.ServerOptimizerPlugin
+api-version: '26.3'
+author: ServerOptimizer
+website: https://github.com/PurpurMC/Purpur
+softdepend: [Geyser-Spigot, floodgate]
+commands:
+  so:
+    description: ServerOptimizer diagnostics and administration
+    usage: /so help
+permissions:
+  serveroptimizer.admin:
+    description: Full access to ServerOptimizer
+    default: op
+    children:
+      serveroptimizer.status: true
+      serveroptimizer.alerts: true
+      serveroptimizer.reload: true
+      serveroptimizer.mode: true
+      serveroptimizer.cleaner: true
+  serveroptimizer.status:
+    description: View metrics, history and recommendations
+    default: op
+  serveroptimizer.alerts:
+    description: Receive optimization alerts
+    default: op
+  serveroptimizer.reload:
+    description: Reload plugin configuration
+    default: op
+  serveroptimizer.mode:
+    description: Change optimization mode
+    default: op
+  serveroptimizer.cleaner:
+    description: Start or stop the explicitly configured item cleaner
+    default: op

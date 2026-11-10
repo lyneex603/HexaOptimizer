@@ -1,0 +1,6 @@
+Build requirements: JDK 25, Maven 3.9+, internet access.
+From the ServerOptimizer project directory run:
+  mvn clean package
+Expected JAR:
+  target/ServerOptimizer-1.1.2.jar
+Target API: org.purpurmc.purpur:purpur-api:26.3.build.2655-stable

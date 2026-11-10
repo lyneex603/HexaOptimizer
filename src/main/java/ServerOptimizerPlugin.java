@@ -1,5 +1,7 @@
 package dev.serveroptimizer;
 
+import java.util.Iterator;
+import java.util.Arrays;
 import dev.serveroptimizer.alert.AlertManager;
 import dev.serveroptimizer.alert.DiscordNotifier;
 import dev.serveroptimizer.command.OptimizerCommand;
